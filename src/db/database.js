@@ -8,16 +8,35 @@ const createCohortsTable = (db) => {
     `CREATE TABLE cohorts (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       cohort_id VARCHAR NOT NULL UNIQUE,
-      cohort_name VARCHAR NOT NULL UNIQUE,
-      cohort_short_name VARCHAR NOT NULL UNIQUE,
-      phase text,
-      status text
+      learn_id INTEGER,
+      product_code VARCHAR,
+      rotation_id VARCHAR,
+      schedule VARCHAR,
+      start_date DATE NOT NULL,
+      grad_date DATE NOT NULL,
+      fifty_percent DATE,
+      sixty_percent DATE,
+      google_calendar_id VARCHAR,
+      cohort_lead VARCHAR,
+      tech_mentor VARCHAR,
+      senior_phase_begins DATE,
+      fec_start DATE,
+      sdc_start DATE,
+      outcome_start DATE,
+      solo_1_start DATE,
+      solo_1_end DATE,
+      solo_2_start DATE,
+      solo_2_end DATE,
+      holiday_1_start DATE,
+      holiday_1_end DATE,
+      holiday_2_start DATE,
+      holiday_2_end DATE
     )`,
     (err) => {
       if (err) {
         // Table already created
       } else {
-        const insert = 'INSERT INTO cohorts VALUES (?, ?, ?, ?, ?, ?)';
+        const insert = 'INSERT INTO cohorts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         cohorts.forEach((cohort) => {
           db.run(insert, cohort);
         });
