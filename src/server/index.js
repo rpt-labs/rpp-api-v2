@@ -21,6 +21,21 @@ app.get('/api/cohorts', (req, res) => {
   });
 });
 
+app.get('/api/students', (req, res) => {
+  const sql = 'select * from students';
+  const params = [];
+  db.all(sql, params, (err, rows) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: 'success',
+      data: rows
+    });
+  });
+});
+
 app.listen(port, () => {
  console.log(`Server running on port ${port}`);
 });
