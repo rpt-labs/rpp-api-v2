@@ -37,10 +37,7 @@ const createCohortsTable = (db) => {
       if (err) {
         // Table already created
       } else {
-        const insert = 'INSERT INTO cohorts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        cohorts.forEach((cohort) => {
-          db.run(insert, cohort);
-        });
+        console.info('cohorts table created');
       }
     }
   );
@@ -72,10 +69,7 @@ const createStudentsTable = (db) => {
       if (err) {
         // Table already created
       } else {
-        const insert = 'INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        students.forEach((student) => {
-          db.run(insert, student);
-        });
+        console.info('students table created')
       }
     }
   );

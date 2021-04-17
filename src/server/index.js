@@ -6,34 +6,28 @@ const port = process.env.PORT || 9001;
 
 const app = express();
 
+const getData = require('./utils');
+
 app.get('/api/cohorts', (req, res) => {
   const sql = 'select * from cohorts';
-  const params = [];
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: 'success',
-      data: rows
-    });
-  });
+  getData(db, sql, res);
+});
+
+app.get('/api/cohort/:id', (req, res) => {
+  const {id} = req.params;
+  const sql = `select * from cohorts where cohort_id = "${id}" COLLATE NOCASE`;
+  getData(db, sql, res);
 });
 
 app.get('/api/students', (req, res) => {
   const sql = 'select * from students';
-  const params = [];
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: 'success',
-      data: rows
-    });
-  });
+  getData(db, sql, res);
+});
+
+app.get('/api/students/status/:status', (req, res) => {
+  const {status} = req.params;
+  const sql = `select * from students where status = "${status}" COLLATE NOCASE`;
+  getData(db, sql, res);
 });
 
 app.listen(port, () => {
