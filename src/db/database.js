@@ -1,8 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 
 const DBSOURCE = './src/db/roster.sqlite3';
-const cohorts = require('./cohorts');
-const students = require('./students');
 
 const createCohortsTable = (db) => {
   db.run(
@@ -75,6 +73,25 @@ const createStudentsTable = (db) => {
   );
 };
 
+const createCohortsStudentsTable = (db) => {
+  db.run(
+    `CREATE TABLE cohorts_students (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      student_id INTEGER,
+      cohort_id INTEGER,
+      is_active BOOLEAN,
+      is_deferred BOOLEAN
+    )`,
+    (err) => {
+      if (err) {
+        // Table already created
+      } else {
+        console.info('cohorts_students table created')
+      }
+    }
+  );
+};
+
 const db = new sqlite3.Database(DBSOURCE, (err) => {
   if (err) {
     // Cannot open database
@@ -84,6 +101,7 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
     console.log('Connected to the SQLite database.');
     createCohortsTable(db);
     createStudentsTable(db);
+    createCohortsStudentsTable(db)
   }
 });
 
