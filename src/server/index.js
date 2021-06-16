@@ -32,7 +32,23 @@ app.get('/api/students/status/:status', (req, res) => {
 
 app.get('/api/students/cohort/:cohortId', async (req, res) => {
   const { cohortId } = req.params;
-  const sql = `select students.first_name, students.last_name, students.status, cohorts_students.cohort_id from students INNER JOIN cohorts_students ON students.id = cohorts_students.student_id AND cohorts_students.cohort_id = ${cohortId}`;
+  const sql = `select students.first_name, students.last_name, students.status, cohorts_students.cohort_id
+    FROM students
+    INNER JOIN cohorts_students ON students.id = cohorts_students.student_id
+    AND cohorts_students.cohort_id = ${cohortId}`;
+  getData(db, sql, res);
+});
+
+app.get('/api/student/:cohortId/:name', async (req, res) => {
+  const { cohortId, name } = req.params;
+  console.log({cohortId, name })
+  const sql = `select students.first_name, students.last_name, students.status, cohorts_students.cohort_id
+    FROM students
+    INNER JOIN cohorts_students
+    ON students.id = cohorts_students.student_id
+    WHERE cohorts_students.cohort_id = ${cohortId}
+    AND (students.first_name = "${String(name)}" COLLATE NOCASE OR students.last_name = "${String(name)}" COLLATE NOCASE)`;
+
   getData(db, sql, res);
 });
 
