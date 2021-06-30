@@ -33,7 +33,7 @@ app.get('/api/students/status/:status', (req, res) => {
 app.get('/api/students/cohort/:cohortId', async (req, res) => {
   const { cohortId } = req.params;
   const cohortNumber = cohortId.replace(/\D/g, "")
-  const sql = `select students.first_name, students.last_name, students.status, cohorts_students.cohort_id
+  const sql = `select students.first_name, students.last_name, students.github, students.status, cohorts_students.cohort_id
     FROM students
     INNER JOIN cohorts_students ON students.id = cohorts_students.student_id
     AND cohorts_students.cohort_id = ${cohortNumber}`;
