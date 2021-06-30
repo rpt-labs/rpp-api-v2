@@ -1,4 +1,4 @@
-const getData = (db, query ,res) => {
+const getData = (db, query ,res, fn) => {
   const params = [];
   db.all(query, params, (err, rows) => {
     if (err) {
@@ -7,7 +7,7 @@ const getData = (db, query ,res) => {
     }
     res.json({
       message: 'success',
-      data: rows
+      data: fn ? fn(rows) : rows
     });
   });
 }
