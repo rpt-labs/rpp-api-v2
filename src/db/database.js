@@ -67,7 +67,7 @@ const createStudentsTable = (db) => {
       if (err) {
         // Table already created
       } else {
-        console.info('students table created')
+        console.info('students table created');
       }
     }
   );
@@ -86,7 +86,43 @@ const createCohortsStudentsTable = (db) => {
       if (err) {
         // Table already created
       } else {
-        console.info('cohorts_students table created')
+        console.info('cohorts_students table created');
+      }
+    }
+  );
+};
+
+const createSprintsTable = (db) => {
+  db.run(
+    `CREATE TABLE sprints (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      sprint_name INTEGER,
+      message_0 VARCHAR,
+      message_1 VARCHAR,
+      message_2 VARCHAR,
+      message_3 VARCHAR,
+      message_4 VARCHAR,
+      message_5 VARCHAR,
+      message_6 VARCHAR,
+      message_7 VARCHAR,
+      message_8 VARCHAR,
+      message_9 VARCHAR,
+      message_10 VARCHAR,
+      message_11 VARCHAR,
+      message_12 VARCHAR,
+      message_13 VARCHAR,
+      message_14 VARCHAR,
+      message_15 VARCHAR,
+      message_16 VARCHAR,
+      message_17 VARCHAR,
+      message_18 VARCHAR,
+      message_19 VARCHAR
+    )`,
+    (err) => {
+      if (err) {
+        // Table already created
+      } else {
+        console.info('sprints table created');
       }
     }
   );
@@ -101,9 +137,9 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
     console.log('Connected to the SQLite database.');
     createCohortsTable(db);
     createStudentsTable(db);
-    createCohortsStudentsTable(db)
+    createCohortsStudentsTable(db);
+    createSprintsTable(db);
   }
 });
 
 module.exports = db;
-
