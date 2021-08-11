@@ -61,6 +61,27 @@ app.get('/api/student/:cohortId/:name', async (req, res) => {
   getData(db, sql, res);
 });
 
+app.get('/api/sprints', (req, res) => {
+  const sql = 'SELECT * from sprints';
+  const getValidMessages = (data) => {
+    const sprintsMap = {};
+    // @note: this is needed to ensure the dto matches with current ui implementation.
+    // @TODO: refactor UI to support a simpler data structure
+    data
+      .map((item) => Object.values(item).filter(Boolean))
+      .forEach(
+        (value) =>
+          (sprintsMap[value[1]] = {
+            id: value[0],
+            messages: value.slice(2, value.length - 1).map((item) => ({ message: item }))
+          })
+      );
+    return sprintsMap;
+  };
+
+  getData(db, sql, res, getValidMessages);
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
