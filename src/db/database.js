@@ -92,41 +92,55 @@ const createCohortsStudentsTable = (db) => {
   );
 };
 
-const createSprintsTable = (db) => {
+const createMilestoneMessagesTable = (db) => {
   db.run(
-    `CREATE TABLE sprints (
+    `CREATE TABLE milestone_messages (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      sprint_name INTEGER,
-      message_0 VARCHAR,
-      message_1 VARCHAR,
-      message_2 VARCHAR,
-      message_3 VARCHAR,
-      message_4 VARCHAR,
-      message_5 VARCHAR,
-      message_6 VARCHAR,
-      message_7 VARCHAR,
-      message_8 VARCHAR,
-      message_9 VARCHAR,
-      message_10 VARCHAR,
-      message_11 VARCHAR,
-      message_12 VARCHAR,
-      message_13 VARCHAR,
-      message_14 VARCHAR,
-      message_15 VARCHAR,
-      message_16 VARCHAR,
-      message_17 VARCHAR,
-      message_18 VARCHAR,
-      message_19 VARCHAR
-    )`,
+      message VARCHAR
+      )`,
     (err) => {
       if (err) {
-        // Table already created
+        console.error(err.message);
       } else {
         console.info('sprints table created');
       }
     }
   );
 };
+
+const createSprintsTable = (db) => {
+  db.run(
+    `CREATE TABLE sprints (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      sprint_name INTEGER,
+      )`,
+    (err) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.info('sprints table created');
+      }
+    }
+  );
+};
+
+const createSprintMessagesTable = (db) => {
+  db.run(
+    `CREATE TABLE sprint_milestone_messages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      sprint_id INTEGER,
+      message_id INTEGER
+    )`,
+    (err) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.info('cohorts_students table created');
+      }
+    }
+  );
+};
+
 
 const db = new sqlite3.Database(DBSOURCE, (err) => {
   if (err) {
@@ -138,7 +152,9 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
     createCohortsTable(db);
     createStudentsTable(db);
     createCohortsStudentsTable(db);
+    createMilestoneMessagesTable(db);
     createSprintsTable(db);
+    createSprintMessagesTable(db);
   }
 });
 
