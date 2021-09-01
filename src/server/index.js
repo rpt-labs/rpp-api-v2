@@ -6,7 +6,7 @@ const port = process.env.PORT || 9001;
 
 const app = express();
 
-const getData = require('./utils');
+const { getData, getValidMessages }= require('./utils');
 
 app.get('/api/cohorts', (req, res) => {
   const sql = 'SELECT * from cohorts';
@@ -62,20 +62,10 @@ app.get('/api/student/:cohortId/:name', async (req, res) => {
 });
 
 app.get('/api/sprints', (req, res) => {
-  const sql = `SELECT sprints.sprint_name, milestone_messages.message
+  const sql = `SELECT sprints.id, sprints.sprint_name, milestone_messages.message
     FROM sprints
     LEFT JOIN sprint_milestone_messages ON sprints.id = sprint_milestone_messages.sprint_id
     LEFT JOIN milestone_messages ON sprint_milestone_messages.message_id = milestone_messages.id`;
-  const getValidMessages = (data) => {
-    const sprintsMap = {};
-    // @TODO: refactor UI to support a simpler data structure
-    data.map((item) =>
-      sprintsMap[item.sprint_name]
-        ? sprintsMap[item.sprint_name].push(item.message)
-        : (sprintsMap[item.sprint_name] = [item.message])
-    );
-    return sprintsMap;
-  };
   getData(db, sql, res, getValidMessages);
 });
 

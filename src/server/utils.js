@@ -11,4 +11,19 @@ const getData = (db, query ,res, fn) => {
     });
   });
 }
-module.exports = getData;
+
+const getValidMessages = (data) => {
+  const sprintsMap = {};
+  // @TODO: refactor UI to support a simpler data structure
+  data.map((item) =>
+    sprintsMap[item.sprint_name]
+      ? sprintsMap[item.sprint_name].messages.push({ message: item.message })
+      : (sprintsMap[item.sprint_name] = {
+          id: item.id,
+          messages: [{ message: item.message }]
+        })
+  );
+  return sprintsMap;
+};
+
+module.exports = { getData, getValidMessages };
