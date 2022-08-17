@@ -102,7 +102,7 @@ const createMilestoneMessagesTable = (db) => {
       if (err) {
         console.error(err.message);
       } else {
-        console.info('sprints table created');
+        console.info('milestone_messages table created');
       }
     }
   );
@@ -112,7 +112,7 @@ const createSprintsTable = (db) => {
   db.run(
     `CREATE TABLE sprints (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      sprint_name INTEGER,
+      sprint_name INTEGER
       )`,
     (err) => {
       if (err) {
